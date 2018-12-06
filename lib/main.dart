@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator',
+      title: "Rowan's App",
       home: RandomWords(),
       theme: ThemeData(
         primarySwatch: Colors.amber
@@ -23,13 +23,16 @@ class RandomWords extends StatefulWidget {
 
 class RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 18);
+  final Set<WordPair> _saved = new Set<WordPair>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold (
       appBar: AppBar(
-        title: Text('Startup Name Generator'),
+        title: Text("Startup Namer Demo"),
+        actions: <Widget>[
+          new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved,)
+        ],
       ),
       body: _buildSuggestions(),
     );
@@ -54,11 +57,56 @@ class RandomWordsState extends State<RandomWords> {
   }
 
   Widget _buildRow(WordPair pair) {
+    final bool alreadySaved = _saved.contains(pair);
+
     return ListTile(
       title: Text(
         pair.asPascalCase,
-        style: _biggerFont,
+        style: TextStyle(color: Colors.cyan, fontSize: 18)
       ),
+      trailing: new Icon(
+        alreadySaved? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
+      onTap: () {
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      },
+    );
+  }
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      new MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          final Iterable<ListTile> tiles = _saved.map(
+              (WordPair pair) {
+                return ListTile(
+                  title: new Text(
+                    pair.asPascalCase,
+                    style: new TextStyle(fontSize: 18)
+                  )
+                );
+              }
+          );
+
+          final List<Widget> divided = ListTile
+            .divideTiles(tiles: tiles, context: context)
+            .toList();
+
+          return new Scaffold(
+            appBar: new AppBar(
+              title: const Text('Saved Suggestions')
+            ),
+            body: new ListView(children: divided)
+          );
+        }
+      )
     );
   }
 }
