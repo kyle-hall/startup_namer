@@ -28,6 +28,7 @@ class RandomWordsState extends State<RandomWords> {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
+      backgroundColor: Colors.black38,
       appBar: AppBar(
         title: Text("Startup Namer Demo"),
         actions: <Widget>[
@@ -43,7 +44,7 @@ class RandomWordsState extends State<RandomWords> {
       padding: const EdgeInsets.all(16.0),
 
       itemBuilder: (context, i) {
-        if (i.isOdd) return Divider();
+        if (i.isOdd) return Divider(color: Colors.white30);
 
         final index = i ~/ 2;
 
@@ -62,11 +63,11 @@ class RandomWordsState extends State<RandomWords> {
     return ListTile(
       title: Text(
         pair.asPascalCase,
-        style: TextStyle(color: Colors.cyan, fontSize: 18)
+        style: TextStyle(color: Colors.white70, fontSize: 18)
       ),
       trailing: new Icon(
         alreadySaved? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
+        color: alreadySaved ? Colors.red : Colors.white30,
       ),
       onTap: () {
         setState(() {
@@ -89,17 +90,18 @@ class RandomWordsState extends State<RandomWords> {
                 return ListTile(
                   title: new Text(
                     pair.asPascalCase,
-                    style: new TextStyle(fontSize: 18)
+                    style: new TextStyle(color: Colors.white70, fontSize: 18)
                   )
                 );
               }
           );
 
           final List<Widget> divided = ListTile
-            .divideTiles(tiles: tiles, context: context)
+            .divideTiles(tiles: tiles, context: context, color: Colors.white30)
             .toList();
 
           return new Scaffold(
+            backgroundColor: Colors.black38,
             appBar: new AppBar(
               title: const Text('Saved Suggestions')
             ),
