@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       title: "Rowan's App",
       home: RandomWords(),
       theme: ThemeData(
-        primarySwatch: Colors.amber
+        primarySwatch: Colors.red
       )
     );
   }
@@ -28,9 +28,9 @@ class RandomWordsState extends State<RandomWords> {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
-      backgroundColor: Colors.black38,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Startup Namer Demo"),
+        title: Text("Rowan's App"),
         actions: <Widget>[
           new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved,)
         ],
@@ -44,7 +44,7 @@ class RandomWordsState extends State<RandomWords> {
       padding: const EdgeInsets.all(16.0),
 
       itemBuilder: (context, i) {
-        if (i.isOdd) return Divider(color: Colors.white30);
+        if (i.isOdd) return Divider(color: Colors.grey);
 
         final index = i ~/ 2;
 
@@ -63,11 +63,11 @@ class RandomWordsState extends State<RandomWords> {
     return ListTile(
       title: Text(
         pair.asPascalCase,
-        style: TextStyle(color: Colors.white70, fontSize: 18)
+        style: TextStyle(color: Colors.blueGrey, fontSize: 18)
       ),
       trailing: new Icon(
         alreadySaved? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : Colors.white30,
+        color: alreadySaved ? Colors. : Colors.blueGrey,
       ),
       onTap: () {
         setState(() {
